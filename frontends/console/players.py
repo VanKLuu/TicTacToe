@@ -8,7 +8,7 @@ class ConsolePlayer(Player):
     def get_move(self, game_state: GameState) -> Move | None:
         while not game_state.game_over:
             try:
-                index = grid_to_index(input(f"Play 1's move: ").strip())
+                index = grid_to_index(input(f"Player 1's move: ").strip())
             except ValueError:
                 print("Please provide coordinates in the form of A1 or 1A")
             else:
@@ -20,12 +20,12 @@ class ConsolePlayer(Player):
     
 # to convert user input to grid mapping
 def grid_to_index(grid: str) -> int:
-    if re.match(r"[abcABC][123]", grid):
+    if re.match(r"[abcdABCD][1234]", grid):
         col, row = grid
-    elif re.match(r"[123][abcABC]", grid):
+    elif re.match(r"[1234][abcdABCD]", grid):
         row, col = grid
     else:
         raise ValueError("Invalid grid coordinates")
-    return 3 * (int(row) - 1) + (ord(col.upper()) - ord("A"))
+    return 4 * (int(row) - 1) + (ord(col.upper()) - ord("A"))
 
     
