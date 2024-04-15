@@ -17,7 +17,7 @@ WINNING_PATTERNS = (
     "..?...?...?...?.",
     "...?...?...?...?",
     "?....?....?....?",
-    "...?..?..?..?...",
+    "...?..?..?..?..."
 )
 
 
@@ -135,11 +135,11 @@ class GameState:
         )
 
     def evaluate_score(self, mark: Mark) -> int:
-        if self.game_over:
-            if self.tie:
-                return 0
-            if self.winner is mark:
-                return 1
-            else:
-                return -1
-        raise UnknownGameScore("Game is not over yet")
+        if self.tie:
+            return 0
+        elif self.winner == mark:
+            return 1
+        elif self.winner == mark.other:
+            return -1
+        else:
+            return 0
