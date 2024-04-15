@@ -18,3 +18,4 @@ def minimax(
         minimax(next_move, maximizer, not choose_highest_score)
         for next_move in move.after_state.possible_moves
     )
+

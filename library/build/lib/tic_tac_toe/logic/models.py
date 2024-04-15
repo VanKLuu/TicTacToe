@@ -8,14 +8,16 @@ from tic_tac_toe.logic.exceptions import InvalidMove, UnknownGameScore
 from tic_tac_toe.logic.validators import validate_game_state, validate_grid
 
 WINNING_PATTERNS = (
-    "???......",
-    "...???...",
-    "......???",
-    "?..?..?..",
-    ".?..?..?.",
-    "..?..?..?",
-    "?...?...?",
-    "..?.?.?..",
+    "????............",
+    "....????........",
+    "........????....",
+    "............????",
+    "?...?...?...?...",
+    ".?...?...?...?..",
+    "..?...?...?...?.",
+    "...?...?...?...?",
+    "?....?....?....?",
+    "...?..?..?..?...",
 )
 
 
@@ -30,7 +32,7 @@ class Mark(str, enum.Enum):
 
 @dataclass(frozen=True)
 class Grid:
-    cells: str = " " * 9
+    cells: str = " " * 16
 
     def __post_init__(self) -> None:
         validate_grid(self)
@@ -73,7 +75,7 @@ class GameState:
 
     @cached_property
     def game_not_started(self) -> bool:
-        return self.grid.empty_count == 9
+        return self.grid.empty_count == 16
 
     @cached_property
     def game_over(self) -> bool:

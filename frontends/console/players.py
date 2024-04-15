@@ -21,10 +21,10 @@ class ConsolePlayer(Player):
 
 
 def grid_to_index(grid: str) -> int:
-    if re.match(r"[abcABC][123]", grid):
+    if re.match(r"[abcdABCD][1234]", grid):
         col, row = grid
-    elif re.match(r"[123][abcABC]", grid):
+    elif re.match(r"[1234][abcdABCD]", grid):
         row, col = grid
     else:
         raise ValueError("Invalid grid coordinates")
-    return 3 * (int(row) - 1) + (ord(col.upper()) - ord("A"))
+    return 4 * (int(row) - 1) + (ord(col.upper()) - ord("A"))
