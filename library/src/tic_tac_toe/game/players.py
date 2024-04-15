@@ -1,5 +1,6 @@
 import abc
 import time
+from typing import Optional
 from tic_tac_toe.logic.models import GameState, Mark, Move
 from tic_tac_toe.logic.exceptions import InvalidMove
 from tic_tac_toe.logic.minimax import find_best_move
@@ -32,6 +33,11 @@ class ComputerPlayer(Player, metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def get_computer_move(self, game_state: GameState) -> Move | None:
         """Return the computer's move in the given game state."""
+
+# for testing -> remove later
+class RandomComputerPlayer(ComputerPlayer):
+    def get_computer_move(self, game_state: GameState) -> Optional[Move]:
+        return game_state.make_random_move()
 
 class MinimaxComputerPlayer(ComputerPlayer):
     def get_computer_move(self, game_state: GameState) -> Move | None:
