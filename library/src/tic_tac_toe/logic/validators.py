@@ -10,8 +10,8 @@ from tic_tac_toe.logic.exceptions import InvalidGameState
 
 # for error checking to make sure valid data entered on board
 def validate_grid(grid: Grid) -> None:
-    if not re.match(r"^[\sXO]{9}$", grid.cells):
-        raise ValueError("Must contain 9 cells of: X, O, or space")
+    if not re.match(r"^[\sXO]{16}$", grid.cells):
+        raise ValueError("Must contain 16 cells of: X, O, or space")
     
 # for validating all aspects of the game
 def validate_game_state(game_state: GameState) -> None:

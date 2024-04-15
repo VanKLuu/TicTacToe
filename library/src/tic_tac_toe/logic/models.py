@@ -9,14 +9,16 @@ from tic_tac_toe.logic.validators import validate_game_state, validate_grid
 
 # the winning patterns
 WINNING_PATTERNS = (
-    "???......",
-    "...???...",
-    "......???",
-    "?..?..?..",
-    ".?..?..?.",
-    "..?..?..?",
-    "?...?...?",
-    "..?.?.?..",
+    "????............",
+    "....????........",
+    "........????....",
+    "............????",
+    "?...?...?...?...",
+    ".?...?...?...?..",
+    "..?...?...?...?.",
+    "...?...?...?...?",
+    "?....?....?....?",
+    "...?..?..?..?...",   
 )
 # creating the characters for the players
 class Mark(str, enum.Enum):
@@ -31,13 +33,11 @@ class Mark(str, enum.Enum):
 @dataclass(frozen=True)
 class Grid:
     # creating the board cells
-    cells: str = " " * 9
+    cells: str = " " * 16
 
     # for error checking to make sure valid data
     def __post_init__(self) -> None:
         validate_grid(self)
-        # if not re.match(r"^[\sXO]{9}$", self.cells):
-            # raise ValueError("Must contain 9 cells of: X, O, or space")
     
     # determining the number of Xs on the board
     @cached_property
@@ -82,7 +82,7 @@ class GameState:
     # for determining if the game has started
     @cached_property
     def game_not_started(self) -> bool:
-        return self.grid.empty_count == 9
+        return self.grid.empty_count == 16
     
     # for determining if the game is over
     @cached_property
