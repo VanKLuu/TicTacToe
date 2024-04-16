@@ -3,7 +3,7 @@ import time
 from typing import Optional
 from tic_tac_toe.logic.models import GameState, Mark, Move
 from tic_tac_toe.logic.exceptions import InvalidMove
-from tic_tac_toe.logic.minimax import find_best_move
+from tic_tac_toe.logic.minimax import find_best_move, find_worst_move
 
 class Player(metaclass=abc.ABCMeta):
     def __init__(self, mark: Mark) -> None:
@@ -44,4 +44,5 @@ class MinimaxComputerPlayer(ComputerPlayer):
         if game_state.game_not_started:
             return game_state.make_random_move()
         else:
-            return find_best_move(game_state)
+            # return find_best_move(game_state)
+            return find_worst_move(game_state)
