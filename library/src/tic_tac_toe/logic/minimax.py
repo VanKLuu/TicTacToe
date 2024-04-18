@@ -26,13 +26,13 @@ def reverse_minimax(game_state: GameState, minimizer: Mark, is_minimizing: bool,
     if is_minimizing:
         worst_score = float('inf')
         for move in game_state.possible_moves:
-            score = minimax(move.after_state, minimizer, False, depth + 1)
+            score = reverse_minimax(move.after_state, minimizer, False, depth + 1)
             worst_score = min(worst_score, score)
         return worst_score
     else:
         worst_score = float('-inf')
         for move in game_state.possible_moves:
-            score = minimax(move.after_state, minimizer, True, depth + 1)
+            score = reverse_minimax(move.after_state, minimizer, True, depth + 1)
             worst_score = max(worst_score, score)
         return worst_score
 
