@@ -24,7 +24,7 @@ class Player(metaclass=abc.ABCMeta):
 
 
 class ComputerPlayer(Player, metaclass=abc.ABCMeta):
-    def __init__(self, mark: Mark, delay_seconds: float = 0.25):
+    def __init__(self, mark: Mark, delay_seconds: float = 0.0):
         super().__init__(mark)
         self.delay_seconds = delay_seconds
 
