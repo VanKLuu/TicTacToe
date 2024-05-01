@@ -7,10 +7,6 @@ This is a companion project to a Real Python [tutorial](https://realpython.com/t
 
 ---
 
-## Game Engine Library
-
-The underlying game logic is encapsulated in a common library, which can be reused across multiple [game front ends](#game-front-ends) without duplicating the code.
-
 ### Installing
 
 Before proceeding, make sure you've created a virtual environment, activated it, and installed the tic-tac-toe game engine library into it:
