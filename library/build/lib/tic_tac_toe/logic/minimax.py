@@ -2,8 +2,7 @@ from functools import partial
 from tic_tac_toe.logic.models import GameState, Mark, Move
 
 
-def minimax(game_state: GameState, maximizer: Mark, is_maximizing: bool, depth: int = 0, alpha: float = float('-inf'),
-            beta: float = float('inf')) -> int:
+def minimax(game_state: GameState, maximizer: Mark, is_maximizing: bool, depth: int = 0, alpha: float = float('-inf'), beta: float = float('inf')) -> int:
     if depth >= 4 or game_state.game_over:
         return game_state.evaluate_score(maximizer)
 
@@ -25,13 +24,11 @@ def minimax(game_state: GameState, maximizer: Mark, is_maximizing: bool, depth: 
             if alpha >= beta:
                 break
         return best_score
-
-
-def reverse_minimax(game_state: GameState, minimizer: Mark, is_minimizing: bool, depth: int = 0,
-                    alpha: float = float('-inf'), beta: float = float('inf')) -> int:
+    
+def reverse_minimax(game_state: GameState, minimizer: Mark, is_minimizing: bool, depth: int = 0, alpha: float = float('-inf'), beta: float = float('inf')) -> int:
     if depth >= 5 or game_state.game_over:
         return game_state.evaluate_score(minimizer)
-
+    
     if is_minimizing:
         worst_score = float('inf')
         for move in game_state.possible_moves:
@@ -50,10 +47,8 @@ def reverse_minimax(game_state: GameState, minimizer: Mark, is_minimizing: bool,
             if alpha >= beta:
                 break
         return best_score
-
-
 def find_best_move(game_state: GameState, mark: Mark) -> Move:
-
+    # maximizer = game_state.current_mark
     maximizer = mark
     best_score = float('-inf')
     best_move = None
@@ -66,9 +61,8 @@ def find_best_move(game_state: GameState, mark: Mark) -> Move:
 
     return best_move
 
-
 def find_worst_move(game_state: GameState, mark: Mark) -> Move:
-
+    # minimizer = game_state.current_mark
     minimizer = mark
     worst_score = float('inf')
     worst_move = None
