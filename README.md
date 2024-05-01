@@ -36,6 +36,7 @@ There are a few game front ends implemented in separate packages for you to try 
 ```shell
 $ cd tic-tac-toe/frontends/
 $ python play.py
+```
 
 ## Running the Game through VS Code
 1. make sure that you are in play.py in the frontends folder
