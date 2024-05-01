@@ -3,8 +3,8 @@ class InvalidGameState(Exception):
 
 
 class InvalidMove(Exception):
-    """Raised when the move is invalid."""
+    """Raised when the move is invalid"""
 
 
 class UnknownGameScore(Exception):
-    """Raised when the game score is unknown."""
+    """Raised when the game score is unknown"""
