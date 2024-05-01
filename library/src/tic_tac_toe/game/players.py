@@ -37,19 +37,13 @@ class ComputerPlayer(Player, metaclass=abc.ABCMeta):
         """Return the computer's move in the given game state."""
 
 
-# for testing -> remove later
-class RandomComputerPlayer(ComputerPlayer):
-    def get_computer_move(self, game_state: GameState) -> Optional[Move]:
-        return game_state.make_random_move()
-
 
 class MinimaxComputerPlayer(ComputerPlayer):
     def get_computer_move(self, game_state: GameState) -> Move | None:
         if game_state.game_not_started:
             return game_state.make_random_move()
         else:
-            return find_best_move(game_state)
-        # return find_worst_move(game_state)
+            return find_best_move(game_state, self.mark)
 
 
 class SabotageComputerPlayer(ComputerPlayer):
@@ -58,3 +52,9 @@ class SabotageComputerPlayer(ComputerPlayer):
             return game_state.make_random_move()
         else:
             return find_worst_move(game_state)
+    
+    def get_worst_move(self, game_state: GameState) -> Move | None:
+        return find_worst_move(game_state, self.mark)
+    
+    def get_best_move(self, game_state: GameState) -> Move | None:
+        return find_best_move(game_state, self.mark)

@@ -3,8 +3,7 @@ from typing import NamedTuple
 
 from tic_tac_toe.game.players import (
     Player,
-    RandomComputerPlayer,
-    MinimaxComputerPlayer,
+    MinimaxComputerPlayer
 )
 from tic_tac_toe.logic.models import Mark
 
@@ -12,8 +11,7 @@ from .players import ConsolePlayer
 
 PLAYER_CLASSES = {
     "human": ConsolePlayer,
-    "random": RandomComputerPlayer,
-    "minimax": MinimaxComputerPlayer,
+    "minimax": MinimaxComputerPlayer
 }
 
 

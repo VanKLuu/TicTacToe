@@ -151,11 +151,175 @@ class GameState:
     
     # for the minimax algorithm
     def evaluate_score(self, mark: Mark) -> int:
-        if self.tie:
-            return 0
-        elif self.winner == mark:
-            return 1
-        elif self.winner == mark.other:
-            return -1
+        if self.tie and mark == "X":
+            return 2 # tie is the goal
+        elif self.tie and mark == "O":
+            return -1 # goal is to win
+        elif self.winner == mark and mark == "X":
+            return 2 # don't really care if win
+        elif self.winner == mark and mark == "O":
+            return 2 # goal is to win
+        elif self.winner == mark.other and mark == "X":
+            return -1 # don't want to lose
+        elif self.winner == mark.other and mark == "O":
+            return -2 # don't want to lose
         else:
-            return 0
+            return self.evaluation_function(mark)
+        
+    def evaluation_function(self, mark: Mark) -> int:
+        index = 0
+        while index < 16:
+            # Check the rows to see who is winning (instance of 3 in a row)
+            if self.grid.cells[index] == self.grid.cells[index + 1] and self.grid.cells[index + 1] == self.grid.cells[index + 2] and self.grid.cells[index + 3] == " ":
+                if self.grid.cells[index] == mark:
+                    return 2
+                elif self.grid.cells[index] == mark.other:
+                    return -2
+            elif self.grid.cells[index + 3] == self.grid.cells[index + 2] and self.grid.cells[index + 2] == self.grid.cells[index + 1] and self.grid.cells[index] == " ":
+                if self.grid.cells[index + 3] == mark:
+                    return 2
+                elif self.grid.cells[index] == mark.other:
+                    return -2
+            
+            # instance of 2 in a row
+            if self.grid.cells[index] == self.grid.cells[index + 1] and self.grid.cells[index + 2] == " " and self.grid.cells[index + 3] == " ": # far left
+                if self.grid.cells[index] == mark:
+                    return 2
+                elif self.grid.cells[index] == mark.other:
+                    return -2
+            elif self.grid.cells[index + 3] == self.grid.cells[index + 2] and self.grid.cells[index + 1] == " " and self.grid.cells[index] == " ": # far right
+                if self.grid.cells[index + 3] == mark:
+                    return 2
+                elif self.grid.cells[index] == mark.other:
+                    return -2
+            elif self.grid.cells[index] == " " and self.grid.cells[index + 1] == self.grid.cells[index + 2] and self.grid.cells[index + 3] == " ": # in the middle
+                if self.grid.cells[index + 1] == mark:
+                    return 2
+                elif self.grid.cells[index + 1] == mark.other:
+                    return -2
+            elif self.grid.cells[index] == self.grid.cells[index + 2] and self.grid.cells[index + 1] == " " and self.grid.cells[index + 3] == " ": # split left
+                if self.grid.cells[index] == mark:
+                    return 1 # more risky so worth less
+                elif self.grid.cells[index] == mark.other:
+                    return -1
+            elif self.grid.cells[index + 3] == self.grid.cells[index + 1] and self.grid.cells[index + 2] == " " and self.grid.cells[index] == " ": # split right
+                if self.grid.cells[index + 3] == mark:
+                    return 1
+                elif self.grid.cells[index + 3] == mark.other:
+                    return -1
+            index += 4
+            
+        # check the columns to see whose winning
+        index = 0
+        while index < 4:
+            # instance of 3 in a row
+            if self.grid.cells[index] == self.grid.cells[index + 4] and self.grid.cells[index + 4] == self.grid.cells[index + 8] and self.grid.cells[index + 12] == " ":
+                if self.grid.cells[index] == mark:
+                    return 2
+                elif self.grid.cells[index] == mark.other:
+                    return -2
+            elif self.grid.cells[index + 12] == self.grid.cells[index + 8] and self.grid.cells[index + 8] == self.grid.cells[index + 4] and self.grid.cells[index] == " ":
+                if self.grid.cells[index + 12] == mark:
+                    return 2
+                elif self.grid.cells[index] == mark.other:
+                    return -2
+                
+            # instance of two in a row
+            if self.grid.cells[index] == self.grid.cells[index + 4] and self.grid.cells[index + 8] == " " and self.grid.cells[index + 12] == " ": # top
+                if self.grid.cells[index] == mark:
+                    return 2
+                elif self.grid.cells[index] == mark.other:
+                    return -2
+            elif self.grid.cells[index + 12] == self.grid.cells[index + 8] and self.grid.cells[index + 4] == " " and self.grid.cells[index] == " ": # bottom
+                if self.grid.cells[index + 12] == mark:
+                    return 2
+                elif self.grid.cells[index] == mark.other:
+                    return -2
+            elif self.grid.cells[index] == " " and self.grid.cells[index + 4] == self.grid.cells[index + 8] and self.grid.cells[index + 12] == " ": # in the middle
+                if self.grid.cells[index + 4] == mark:
+                    return 2
+                elif self.grid.cells[index + 4] == mark.other:
+                    return -2
+            elif self.grid.cells[index] == self.grid.cells[index == 8] and self.grid.cells[index + 4] == " " and self.grid.cells[index + 12] == " ": # split up
+                if self.grid.cells[index] == mark:
+                    return 1 # worth less because more risky
+                elif self.grid.cells[index] == mark.other:
+                    return -1
+            elif self.grid.cells[index + 12] == self.grid.cells[index + 4] and self.grid.cells[index + 8] == " " and self.grid.cells[index] == " ": # split down
+                if self.grid.cells[index + 12] == mark:
+                    return 1
+                elif self.grid.cells[index + 12] == mark.other:
+                    return -1
+            index += 1
+
+        # check the right diagonal to see whose winning
+        index = 0
+        # instance of 3 in a row
+        if self.grid.cells[index] == self.grid.cells[index + 5] and self.grid.cells[index + 5] == self.grid.cells[index + 10] and self.grid.cells[index + 15] == " ":
+            if self.grid.cells[index] == mark:
+                return 2
+            elif self.grid.cells[index] == mark.other:
+                return -2
+        elif self.grid.cells[index + 15] == self.grid.cells[index + 10] and self.grid.cells[index + 10] == self.grid.cells[index + 5] and self.grid.cells[index] == " ":
+            if self.grid.cells[index + 15] == mark:
+                return 2
+            elif self.grid.cells[index + 15] == mark.other:
+                return -2
+        
+        # instance of 2 in a row
+        if self.grid.cells[index] == self.grid.cells[index + 5] and self.grid.cells[index + 10] == " " and self.grid.cells[index + 15] == " ":
+            if self.grid.cells[index] == mark:
+                return 2
+            elif self.grid.cells[index] == mark.other:
+                return -2
+        elif self.grid.cells[index + 15] == self.grid.cells[index + 10] and self.grid.cells[index + 5] == " " and self.grid.cells[index] == " ":
+            if self.grid.cells[index + 15] == mark:
+                return 2
+            elif self.grid.cells[index + 15] == mark.other:
+                return -2 
+        elif self.grid.cells[index] == " " and self.grid.cells[index + 5] == self.grid.cells[index + 10] and self.grid.cells[index + 15] == " ":
+            if self.grid.cells[index + 5] == mark:
+                return 2
+            elif self.grid.cells[index + 5] == mark.other:
+                return -2
+
+        # check the other diagonal to see whose winning
+        # instance of 3 in a row
+        if self.grid.cells[index + 3] == self.grid.cells[index + 6] and self.grid.cells[index + 9] == self.grid.cells[index + 9] and self.grid.cells[index + 12] == " ":
+            if self.grid.cells[index + 3] == mark:
+                return 2
+            elif self.grid.cells[index + 3] == mark.other:
+                return -2
+        elif self.grid.cells[index + 12] == self.grid.cells[index + 9] and self.grid.cells[index + 9] == self.grid.cells[index + 6] and self.grid.cells[index + 3] == " ":
+            if self.grid.cells[index + 12] == mark:
+                return 2
+            elif self.grid.cells[index + 12] == mark.other:
+                return -2
+        
+        # instance of 2 in a row
+        if self.grid.cells[index + 3] == self.grid.cells[index + 6] and self.grid.cells[index + 9] == " " and self.grid.cells[index + 12] == " ":
+            if self.grid.cells[index + 3] == mark:
+                return 2
+            elif self.grid.cells[index + 3] == mark.other:
+                return -2
+        elif self.grid.cells[index + 12] == self.grid.cells[index + 9] and self.grid.cells[index + 6] == " " and self.grid.cells[index + 3] == " ":
+            if self.grid.cells[index + 12] == mark:
+                return 2
+            elif self.grid.cells[index + 12] == mark.other:
+                return -2 
+        elif self.grid.cells[index + 3] == " " and self.grid.cells[index + 6] == self.grid.cells[index + 9] and self.grid.cells[index + 12] == " ":
+            if self.grid.cells[index + 6] == mark:
+                return 2
+            elif self.grid.cells[index + 6] == mark.other:
+                return -2
+            
+        return 0
+         
+        # if self.tie:
+        #     return 0
+        # elif self.winner == mark:
+        #     return 1
+        # elif self.winner == mark.other:
+        #     return -1
+        # else:
+        #     return 0
