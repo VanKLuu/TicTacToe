@@ -6,6 +6,44 @@ This is a companion project to a Real Python [tutorial](https://realpython.com/t
 2. Game Front Ends
 
 ---
+### Layout of the Code
+The codebase is organized into the following files and folders:
+```shell
+tic-tac-toe/ # This is the root folder of the project
+│
+├── frontends/ # Contains the user interface components for interacting with the game
+│   │
+│   └── console/ # The console-based user interface directory
+│       ├── __init__.py # Initializes the console frontend package.
+│       ├── __main__.py # Entry point for running the console-based game.
+│       ├── args.py # Defines command-line arguments and their parsing logic.
+│       ├── cli.py # Implements the command-line interface for the game.
+│       ├── players.py # Defines player classes for human and AI opponents
+│       └── renderers.py # Contains rendering logic for displaying the game state
+│
+└── library/ # Contains the core logic and components of the Tic-Tac-Toe game
+    │
+    ├── src/ # Source code directory
+    │   │
+    │   └── tic_tac_toe/ # Main package for the Tic-Tac-Toe game
+    │       │
+    │       ├── game/ # Subpackage containing game-related functionality.
+    │       │   ├── __init__.py # Initializes the game package
+    │       │   ├── engine.py # Implements the game engine for managing game state and turns
+    │       │   ├── players.py # Defines player classes and their behavior.
+    │       │   └── renderers.py # Contains rendering logic for different user interfaces.
+    │       │
+    │       ├── logic/ # Subpackage housing the core game logic
+    │       │   ├── __init__.py # Initializes the logic package
+    │       │   ├── exceptions.py # Defines custom exception classes
+    │       │   ├── minimax.py # Implements the minimax algorithm for AI opponents.
+    │       │   ├── models.py # Defines data models for representing the game state
+    │       │   └── validators.py # Contains functions for validating game state and moves.
+    │       │
+    │       └── __init__.py # Initializes the main Tic-Tac-Toe package.
+    │
+    └── pyproject.toml # Configuration file for the project.
+```
 ### Installing through the CMD line
 Before proceeding, make sure you've created a virtual environment, activated it, and installed the tic-tac-toe game engine library into it:
 
